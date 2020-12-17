@@ -1,0 +1,42 @@
+<div class="card mb-3" *ngIf="books">
+  <div class="card-header"><i class="fa fa-table"></i> Résultats de recherche</div>
+
+  <div class="card-body">
+    <table class="table table-bordered table-hover" width="100%" cellspacing="0" >
+      <thead>
+      <tr>
+        <th>Book name</th>
+        <th>Author name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <th>Book name</th>
+        <th>Author name</th>
+        <th>Description</th>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr *ngFor="let c of books">
+        <td>{{c.bookName}}</td>
+        <td>{{c.authName}}</td>
+        <td>{{c.description}}</td>
+
+
+        <td>
+          <a (click)="favorite(c.id)"><i class="heart fa fa-heart-o"></i></a>&nbsp;&nbsp;
+          <button  (click)="down(c.id)"><i class="fa fa-download"></i></button>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+    <div >
+      <button class="btn btn-primary" (click)="prec()" [disabled]="page==0">Precedent</button>&nbsp;
+      <button class="btn btn-primary" (click)="suiv()" [disabled]="page>=books.totalPages-1">Suivant</button>
+    </div>
+
+  </div>
+  <div class="card-footer small text-muted"></div>
+</div>

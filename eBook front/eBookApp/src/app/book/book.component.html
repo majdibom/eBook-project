@@ -1,0 +1,72 @@
+
+<div class="form-check" *ngIf="isAdmin()">
+  <input type="checkbox" class="form-check-input" [(ngModel)]="add" id="exampleCheck1">
+  <label class="form-check-label" for="exampleCheck1">Add book</label>
+</div>
+
+<div class="card" style="width: 30em;" *ngIf="add">
+  <h5 class="card-header">Add book</h5>
+  <div class="card-body">
+    <form #f="ngForm">
+      <div class="form-group">
+        <label for="authName">Author name</label>
+        <input type="text" name="authName" class="form-control" [(ngModel)]="authName" id="authName" placeholder="author name" required="">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" name="description" [(ngModel)]="description" id="description" placeholder="Description" required="">
+      </div>
+      <div class="form-group">
+        <input style="display: none" type="file" name="file" [(ngModel)]="fileChosen" (change)="onSelectFile($event)" #fileInput/>
+        <button [disabled]="!f.valid" (click)="fileInput.click()" class="btn btn-primary" ><i class="glyphicon glyphicon-file"></i> Pick file</button>&nbsp;&nbsp;
+
+        <button type="reset" class="btn btn-danger">Reset</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card mb-3" *ngIf="books">
+  <div class="card-header"><i class="fa fa-table"></i> </div>
+  <div class="card-body">
+    <table class="table table-bordered table-hover" width="100%" cellspacing="0" >
+      <thead>
+      <tr>
+        <th>Book name</th>
+        <th>Author name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <th>Book name</th>
+        <th>Author name</th>
+        <th>Description</th>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr *ngFor="let c of books">
+        <td>{{c.bookName}}</td>
+        <td>{{c.authName}}</td>
+        <td>{{c.description}}</td>
+
+
+        <td>
+          <a *ngIf="c.favorite=='yes'"(click)="favorite(c.id)"><i class="heart fa fa-heart" style="font-size: 25px;color: red"></i></a>
+          <a *ngIf="c.favorite=='no'" (click)="favorite(c.id)"><i  class="heart fa fa-heart-o" style="font-size: 25px;color:black;" ></i></a>&nbsp;&nbsp;
+          <button (click)="down(c.id)" ><i class="fa fa-download"></i></button>&nbsp;&nbsp;
+          <button *ngIf="isAdmin()" (click)="delete(c.id)" style="background-color: #f44336;"><i class="fa fa-trash-o"style="color: white;"></i></button>
+
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+    <div >
+      <!--<button class="btn btn-primary" (click)="prec()" [disabled]="page==0">Precedent</button>&nbsp;
+      <button class="btn btn-primary" (click)="suiv()" [disabled]="page>=books.totalPages-1">Suivant</button>-->
+    </div>
+
+  </div>
+  <div class="card-footer small text-muted"></div>
+</div>
